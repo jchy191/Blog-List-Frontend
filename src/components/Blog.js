@@ -1,8 +1,14 @@
-import React from 'react'
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>
-)
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default Blog
+Blog.propTypes = {
+	blog: PropTypes.object.isRequired,
+};
+
+const Blog = ({ blog }) => (
+	<div>
+		{blog.title} {blog.author}
+	</div>
+);
+
+export default Blog;
