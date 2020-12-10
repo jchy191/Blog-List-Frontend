@@ -30,4 +30,13 @@ const update = async (updatedPost) => {
 	return response.data;
 };
 
-export default { getAll, create, update, setToken };
+const remove = async (postToDelete) => {
+	const config = {
+		headers: { Authorization: token }
+	};
+	const path = `${baseUrl}/${postToDelete.id}`;
+	const response = await axios.delete(path, config);
+	return response.data;
+};
+
+export default { getAll, create, update, remove, setToken };

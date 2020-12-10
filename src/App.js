@@ -17,9 +17,15 @@ const App = () => {
 	const blogFormRef = useRef();
 
 	useEffect(() => {
-		blogService.getAll().then(blogs =>
-			setBlogs( blogs )
-		);  
+		const getBlogs = async () => {
+			const blogs = await blogService.getAll();
+			setBlogs(blogs.sort((a, b) => {
+				if (a.likes < b.likes) return 1;
+				if (a.likes > b.likes) return -1;
+				return 0;
+			}));
+		};
+		getBlogs();
 	}, []);
 
 	useEffect(() => {
@@ -28,8 +34,6 @@ const App = () => {
 			setUser(JSON.parse(storedUser));
 		}
 	}, []);
-  
-
 
 	const addBlog = async (newPost) => {
 		try {
@@ -57,15 +61,40 @@ const App = () => {
 			blogService.setToken(user.token);
 			postToUpdate = {...postToUpdate, likes: postToUpdate.likes + 1};
 			const response = await blogService.update(postToUpdate);
-			setBlogs(blogs.map(blog => blog.id !== postToUpdate.id ? blog : response));
-			setMessage(`${postToUpdate.title} by ${postToUpdate.author} added!`);
+			setBlogs(blogs.map(blog => blog.id !== postToUpdate.id ? blog : response)
+				.sort((a, b) => {
+					if (a.likes < b.likes) return 1;
+					if (a.likes > b.likes) return -1;
+					return 0;
+				}));
+			setMessage(`${postToUpdate.title} by ${postToUpdate.author} liked!`);
 			setTimeout(() => {
 				setMessage(null);
 			}, 5000);
 		} catch (error) {
 			console.log(error);
 			setIsError(true);
-			setMessage('There was an error likeing the post');
+			setMessage('There was an error liking the post');
+			setTimeout(() => {
+				setMessage(null);
+				setIsError(false);
+			}, 5000);
+		}
+	};
+
+	const deleteBlog = async (postToDelete) => {
+		try {
+			blogService.setToken(user.token);
+			await blogService.remove(postToDelete);
+			setBlogs(blogs.filter(blog => blog.id !== postToDelete.id));
+			setMessage(`${postToDelete.title} by ${postToDelete.author} deleted!`);
+			setTimeout(() => {
+				setMessage(null);
+			}, 5000);
+		} catch (error) {
+			console.log(error);
+			setIsError(true);
+			setMessage('There was an error deleting the post');
 			setTimeout(() => {
 				setMessage(null);
 				setIsError(false);
@@ -115,7 +144,7 @@ const App = () => {
 					<Toggable buttonLabel='Add blog' ref={blogFormRef}>
 						<BlogsForm addBlog={addBlog}/>
 					</Toggable>
-					<BlogsContainer blogs={blogs} likeBlog={likeBlog}/>
+					<BlogsContainer blogs={blogs} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
 				</>	
 			}
 		</div>

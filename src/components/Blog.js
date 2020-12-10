@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 Blog.propTypes = {
 	blog: PropTypes.object.isRequired,
 	likeBlog: PropTypes.func.isRequired,
+	deleteBlog: PropTypes.func.isRequired,
 };
 
-function Blog({ blog, likeBlog }) {
+function Blog({ blog, likeBlog, deleteBlog }) {
 
 	const blogStyle = {
 		paddingTop: 10,
@@ -21,6 +22,12 @@ function Blog({ blog, likeBlog }) {
 	const handleLikes = () => {
 		likeBlog(blog);
 	};
+
+	const handleDelete = () => {
+		if (window.confirm(`Remove ${blog.title} by ${blog.author}?`))
+			deleteBlog(blog);
+	};
+
 	return (
 		<div style={blogStyle}>
 			{visible === false &&
@@ -33,10 +40,11 @@ function Blog({ blog, likeBlog }) {
 			}
 			{visible === true &&
 				<>
-					<p>{blog.title} <button onClick={() => setVisibility(false)}>Hide</button></p>
-					<p>{blog.url}</p>
-					<p>{blog.likes}<button onClick={handleLikes}>Like</button></p>
-					<p>{blog.author}</p>
+					<p>Title: {blog.title} <button onClick={() => setVisibility(false)}>Hide</button></p>
+					<p>URL: {blog.url}</p>
+					<p>Likes: {blog.likes}<button onClick={handleLikes}>Like</button></p>
+					<p>Author: {blog.author}</p>
+					<button onClick={handleDelete}>Remove</button>
 				</>
 			}
 		</div>

@@ -5,14 +5,15 @@ import Blog from './Blog';
 BlogsContainer.propTypes = {
 	blogs: PropTypes.array.isRequired,
 	likeBlog: PropTypes.func.isRequired,
+	deleteBlog: PropTypes.func.isRequired,
 };
 
-function BlogsContainer({ blogs, likeBlog }) {
+function BlogsContainer({ blogs, likeBlog, deleteBlog }) {
 	return (
 		<>
 			<h2>Blogs</h2>
 			{blogs.map(blog =>
-				<Blog key={blog.id} blog={blog} likeBlog={likeBlog}/>
+				<Blog key={blog.id} blog={blog} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
 			)}
 		</>
 	);
