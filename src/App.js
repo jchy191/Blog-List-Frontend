@@ -10,8 +10,6 @@ import loginService from './services/login';
 
 const App = () => {
 	const [blogs, setBlogs] = useState([]);
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
 	const [user, setUser] = useState(null);
 
 	const [ message, setMessage ] = useState(null);
@@ -31,15 +29,7 @@ const App = () => {
 		}
 	}, []);
   
-	const handleChange = (e) => {
-		let value = e.target.value;
-		if (e.target.name === 'username') {
-			setUsername(value);
-		}
-		if (e.target.name === 'password') {
-			setPassword(value);
-		}
-	};
+
 
 	const addBlog = async (newPost) => {
 		try {
@@ -62,13 +52,10 @@ const App = () => {
 		}
 	};
 
-	const handleLogin = async (e) => {
-		e.preventDefault();
+	const handleLogin = async (credentials) => {
 		try {
-			const user = await loginService.login({username, password});
+			const user = await loginService.login(credentials);
 			setUser(user);
-			setUsername('');
-			setPassword('');
 			window.localStorage.setItem('loggedInUser', JSON.stringify(user));
 			setMessage('Logged in successfully!');
 			setTimeout(() => {
@@ -98,7 +85,7 @@ const App = () => {
 				<>
 					<h2>Login</h2>
 					<Notification message={message} isError={isError} />
-					<LoginForm username={username} password={password} handleChange={handleChange} handleSubmit={handleLogin}/>
+					<LoginForm login={handleLogin}/>
 				</>
 				:
 				<>

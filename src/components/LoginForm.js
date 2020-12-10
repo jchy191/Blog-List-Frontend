@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 LoginForm.propTypes = {
-	username: PropTypes.string.isRequired,
-	password: PropTypes.string.isRequired,
-	handleChange: PropTypes.func.isRequired,
-	handleSubmit: PropTypes.func.isRequired,
+	login: PropTypes.func.isRequired,
 };
 
-function LoginForm({ username, password, handleChange, handleSubmit }) {
+function LoginForm({ login }) {
+
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+
+	const handleChange = (e) => {
+		let value = e.target.value;
+		if (e.target.name === 'username') {
+			setUsername(value);
+		}
+		if (e.target.name === 'password') {
+			setPassword(value);
+		}
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		login({username, password});
+	};
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<label>Username: <input onChange={handleChange} value={username} name='username' type='text'/></label>
