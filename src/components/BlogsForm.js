@@ -11,12 +11,17 @@ BlogsForm.propTypes = {
 
 function BlogsForm({handleSubmit, handleChange, title, author, url}) {
 	return (
-		<form onSubmit={handleSubmit}>
-			<label>Title: <input type='text' onChange={handleChange} value={title} name='title' /></label>
-			<label>Author: <input type='text' onChange={handleChange} value={author} name='author' /></label>
-			<label>URL: <input type='text' onChange={handleChange} value={url} name='url' /></label>
-			<button type='submit'>Add new</button>
-		</form>
+		<>
+			<h2>Add a blog entry:</h2> 
+			<form onSubmit={handleSubmit}>
+				<label>Title: <input type='text' onChange={handleChange} value={title} name='title' /></label>
+				<label>Author: <input type='text' onChange={handleChange} value={author} name='author' /></label>
+				<label>URL: <input type='text' onChange={handleChange} value={url} name='url' /></label>
+				<br/>
+				<br/>
+				<button type='submit'>Add new</button>
+			</form>
+		</>
 	);
 }
 

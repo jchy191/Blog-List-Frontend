@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import BlogsContainer from './components/BlogsContainer';
 import BlogsForm from './components/BlogsForm';
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification';
+import Toggable from './components/Toggable';
 import blogService from './services/blogs';
 import loginService from './services/login';
 
@@ -19,6 +20,7 @@ const App = () => {
 	});
 	const [ message, setMessage ] = useState(null);
 	const [ isError, setIsError ] = useState(false);
+	const blogFormRef = useRef();
 
 	useEffect(() => {
 		blogService.getAll().then(blogs =>
@@ -54,7 +56,7 @@ const App = () => {
 		}
 	};
 
-	const handleSubmit = async (e) => {
+	const addBlog = async (e) => {
 		e.preventDefault();
 		try {
 			blogService.setToken(user.token);
@@ -65,6 +67,7 @@ const App = () => {
 			setTimeout(() => {
 				setMessage(null);
 			}, 5000);
+			blogFormRef.current.toggleVisibility();
 		} catch (error) {
 			console.log(error);
 			setIsError(true);
@@ -110,6 +113,7 @@ const App = () => {
 			<h1>Blog-list Application</h1>
 			{user === null ? 
 				<>
+					<h2>Login</h2>
 					<Notification message={message} isError={isError} />
 					<LoginForm username={username} password={password} handleChange={handleChange} handleSubmit={handleLogin}/>
 				</>
@@ -117,7 +121,9 @@ const App = () => {
 				<>
 					<Notification message={message} isError={isError} />
 					<p>{user.name} is logged-in <button onClick={handleLogOut}>Log out?</button></p>
-					<BlogsForm author={newPost.author} title={newPost.title} url={newPost.url} handleChange={handleChange} handleSubmit={handleSubmit}/>
+					<Toggable buttonLabel='Add blog' ref={blogFormRef}>
+						<BlogsForm author={newPost.author} title={newPost.title} url={newPost.url} handleChange={handleChange} handleSubmit={addBlog}/>
+					</Toggable>
 					<BlogsContainer blogs={blogs}/>
 				</>	
 			}

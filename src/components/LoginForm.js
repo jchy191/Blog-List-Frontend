@@ -15,6 +15,7 @@ function LoginForm({ username, password, handleChange, handleSubmit }) {
 			<br/>
 			<label>Password: <input onChange={handleChange} value={password} name='password' type='password'/></label>
 			<br/>
+			<br/>
 			<button type='submit'>Submit</button>
 		</form>
 	);
