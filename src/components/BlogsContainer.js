@@ -4,14 +4,15 @@ import Blog from './Blog';
 
 BlogsContainer.propTypes = {
 	blogs: PropTypes.array.isRequired,
+	likeBlog: PropTypes.func.isRequired,
 };
 
-function BlogsContainer({ blogs }) {
+function BlogsContainer({ blogs, likeBlog }) {
 	return (
 		<>
 			<h2>Blogs</h2>
 			{blogs.map(blog =>
-				<Blog key={blog.id} blog={blog} />
+				<Blog key={blog.id} blog={blog} likeBlog={likeBlog}/>
 			)}
 		</>
 	);

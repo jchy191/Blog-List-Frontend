@@ -52,6 +52,27 @@ const App = () => {
 		}
 	};
 
+	const likeBlog = async (postToUpdate) => {
+		try {
+			blogService.setToken(user.token);
+			postToUpdate = {...postToUpdate, likes: postToUpdate.likes + 1};
+			const response = await blogService.update(postToUpdate);
+			setBlogs(blogs.map(blog => blog.id !== postToUpdate.id ? blog : response));
+			setMessage(`${postToUpdate.title} by ${postToUpdate.author} added!`);
+			setTimeout(() => {
+				setMessage(null);
+			}, 5000);
+		} catch (error) {
+			console.log(error);
+			setIsError(true);
+			setMessage('There was an error likeing the post');
+			setTimeout(() => {
+				setMessage(null);
+				setIsError(false);
+			}, 5000);
+		}
+	};
+
 	const handleLogin = async (credentials) => {
 		try {
 			const user = await loginService.login(credentials);
@@ -94,7 +115,7 @@ const App = () => {
 					<Toggable buttonLabel='Add blog' ref={blogFormRef}>
 						<BlogsForm addBlog={addBlog}/>
 					</Toggable>
-					<BlogsContainer blogs={blogs}/>
+					<BlogsContainer blogs={blogs} likeBlog={likeBlog}/>
 				</>	
 			}
 		</div>

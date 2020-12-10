@@ -14,10 +14,20 @@ const getAll = async () => {
 
 const create = async (newPost) => {
 	const config = {
-		headers: { Authorization: token}
+		headers: { Authorization: token }
 	};
 	const response = await axios.post(baseUrl, newPost, config);
 	return response.data;
 };
 
-export default { getAll, create, setToken };
+const update = async (updatedPost) => {
+	const config = {
+		headers: { Authorization: token }
+	};
+	const {author, date, likes, title, url, user} = updatedPost;
+	const path = `${baseUrl}/${updatedPost.id}`;
+	const response = await axios.put(path, {author, date, likes, title, url, user: user.id}, config);
+	return response.data;
+};
+
+export default { getAll, create, update, setToken };
