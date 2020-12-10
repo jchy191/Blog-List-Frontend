@@ -13,11 +13,7 @@ const App = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [user, setUser] = useState(null);
-	const [newPost, setNewPost] = useState({
-		title:'',
-		author: '',
-		url: ''
-	});
+
 	const [ message, setMessage ] = useState(null);
 	const [ isError, setIsError ] = useState(false);
 	const blogFormRef = useRef();
@@ -43,27 +39,14 @@ const App = () => {
 		if (e.target.name === 'password') {
 			setPassword(value);
 		}
-		if (e.target.name === 'title') {
-			setNewPost({...newPost, title: value});		
-
-		}
-		if (e.target.name === 'author') {
-			setNewPost({...newPost, author: value});		
-
-		}
-		if (e.target.name === 'url') {
-			setNewPost({...newPost, url: value});		
-		}
 	};
 
-	const addBlog = async (e) => {
-		e.preventDefault();
+	const addBlog = async (newPost) => {
 		try {
 			blogService.setToken(user.token);
 			const response = await blogService.create(newPost);
 			setBlogs([...blogs, response]);
-			setMessage(`New Blog ${newPost.title} by ${newPost.author} added!`);
-			setNewPost({title:'', author:'', url:''});
+			setMessage(`New blog: ${newPost.title} by ${newPost.author} added!`);
 			setTimeout(() => {
 				setMessage(null);
 			}, 5000);
@@ -122,7 +105,7 @@ const App = () => {
 					<Notification message={message} isError={isError} />
 					<p>{user.name} is logged-in <button onClick={handleLogOut}>Log out?</button></p>
 					<Toggable buttonLabel='Add blog' ref={blogFormRef}>
-						<BlogsForm author={newPost.author} title={newPost.title} url={newPost.url} handleChange={handleChange} handleSubmit={addBlog}/>
+						<BlogsForm addBlog={addBlog}/>
 					</Toggable>
 					<BlogsContainer blogs={blogs}/>
 				</>	
