@@ -18,6 +18,7 @@ function Blog({ blog, likeBlog, deleteBlog }) {
 	};
 	
 	const [visible, setVisibility] = useState(false);
+	const user = window.localStorage.getItem('loggedInUser');
 
 	const handleLikes = () => {
 		likeBlog(blog);
@@ -27,7 +28,6 @@ function Blog({ blog, likeBlog, deleteBlog }) {
 		if (window.confirm(`Remove ${blog.title} by ${blog.author}?`))
 			deleteBlog(blog);
 	};
-
 	return (
 		<div style={blogStyle}>
 			{visible === false &&
@@ -44,7 +44,7 @@ function Blog({ blog, likeBlog, deleteBlog }) {
 					<p>URL: {blog.url}</p>
 					<p>Likes: {blog.likes}<button onClick={handleLikes}>Like</button></p>
 					<p>Author: {blog.author}</p>
-					<button onClick={handleDelete}>Remove</button>
+					{user.username === blog.user.username && <button onClick={handleDelete}>Remove</button>}
 				</>
 			}
 		</div>
