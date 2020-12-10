@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Blog from './components/Blog';
+import './App.css';
+import BlogsContainer from './components/BlogsContainer';
 import BlogsForm from './components/BlogsForm';
 import LoginForm from './components/LoginForm';
+import Notification from './components/Notification';
 import blogService from './services/blogs';
 import loginService from './services/login';
 
@@ -9,12 +11,14 @@ const App = () => {
 	const [blogs, setBlogs] = useState([]);
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const [user, setUser] = useState(null);
 	const [newPost, setNewPost] = useState({
 		title:'',
 		author: '',
 		url: ''
 	});
-	const [user, setUser] = useState(null);
+	const [ message, setMessage ] = useState(null);
+	const [ isError, setIsError ] = useState(false);
 
 	useEffect(() => {
 		blogService.getAll().then(blogs =>
@@ -32,10 +36,10 @@ const App = () => {
 	const handleChange = (e) => {
 		let value = e.target.value;
 		if (e.target.name === 'username') {
-			setUsername(e.target.value);
+			setUsername(value);
 		}
 		if (e.target.name === 'password') {
-			setPassword(e.target.value);
+			setPassword(value);
 		}
 		if (e.target.name === 'title') {
 			setNewPost({...newPost, title: value});		
@@ -56,8 +60,19 @@ const App = () => {
 			blogService.setToken(user.token);
 			const response = await blogService.create(newPost);
 			setBlogs([...blogs, response]);
+			setMessage(`New Blog ${newPost.title} by ${newPost.author} added!`);
+			setNewPost({title:'', author:'', url:''});
+			setTimeout(() => {
+				setMessage(null);
+			}, 5000);
 		} catch (error) {
 			console.log(error);
+			setIsError(true);
+			setMessage('There was an error adding the blog');
+			setTimeout(() => {
+				setMessage(null);
+				setIsError(false);
+			}, 5000);
 		}
 	};
 
@@ -69,8 +84,19 @@ const App = () => {
 			setUsername('');
 			setPassword('');
 			window.localStorage.setItem('loggedInUser', JSON.stringify(user));
+			setMessage('Logged in successfully!');
+			setTimeout(() => {
+				setMessage(null);
+				setIsError(false);
+			}, 5000);		
 		} catch (error) {
 			console.log(error);
+			setIsError(true);
+			setMessage('There was an error logging in');
+			setTimeout(() => {
+				setMessage(null);
+				setIsError(false);
+			}, 5000);
 		}
 	};
 
@@ -79,28 +105,22 @@ const App = () => {
 		window.localStorage.removeItem('loggedInUser');
 	};
 
-	const blogsContainer = () => (
-		<>
-			<h2>blogs</h2>
-			{blogs.map(blog =>
-				<Blog key={blog.id} blog={blog} />
-			)}
-		</>
-	);
-
-
 	return (
 		<div>
+			<h1>Blog-list Application</h1>
 			{user === null ? 
-				<LoginForm username={username} password={password} handleChange={handleChange} handleSubmit={handleLogin}/>
+				<>
+					<Notification message={message} isError={isError} />
+					<LoginForm username={username} password={password} handleChange={handleChange} handleSubmit={handleLogin}/>
+				</>
 				:
-				<div>
-					<p>{user.name} is logged-in</p><button onClick={handleLogOut}>Log out?</button>
+				<>
+					<Notification message={message} isError={isError} />
+					<p>{user.name} is logged-in <button onClick={handleLogOut}>Log out?</button></p>
 					<BlogsForm author={newPost.author} title={newPost.title} url={newPost.url} handleChange={handleChange} handleSubmit={handleSubmit}/>
-				</div>	
+					<BlogsContainer blogs={blogs}/>
+				</>	
 			}
-
-			{user && blogsContainer()}
 		</div>
 	);
 };
