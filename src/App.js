@@ -144,7 +144,7 @@ const App = () => {
 					<Toggable buttonLabel='Add blog' ref={blogFormRef}>
 						<BlogsForm addBlog={addBlog}/>
 					</Toggable>
-					<BlogsContainer blogs={blogs} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
+					<BlogsContainer blogs={blogs} user={user} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
 				</>	
 			}
 		</div>

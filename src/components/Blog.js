@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 Blog.propTypes = {
 	blog: PropTypes.object.isRequired,
-	likeBlog: PropTypes.func.isRequired,
-	deleteBlog: PropTypes.func.isRequired,
+	user: PropTypes.object.isRequired,
+	likeBlog: PropTypes.func,
+	deleteBlog: PropTypes.func,
 };
 
-function Blog({ blog, likeBlog, deleteBlog }) {
+function Blog({ blog, user, likeBlog, deleteBlog }) {
 
 	const blogStyle = {
 		paddingTop: 10,
@@ -18,7 +19,6 @@ function Blog({ blog, likeBlog, deleteBlog }) {
 	};
 	
 	const [visible, setVisibility] = useState(false);
-	const user = window.localStorage.getItem('loggedInUser');
 
 	const handleLikes = () => {
 		likeBlog(blog);
@@ -34,7 +34,7 @@ function Blog({ blog, likeBlog, deleteBlog }) {
 				<>
 					<div>
 						{blog.title} {blog.author}
-						<button onClick={() => setVisibility(true)}>View</button>
+						<button id='view-button' onClick={() => setVisibility(true)}>View</button>
 					</div>
 				</>
 			}
@@ -42,7 +42,7 @@ function Blog({ blog, likeBlog, deleteBlog }) {
 				<>
 					<p>Title: {blog.title} <button onClick={() => setVisibility(false)}>Hide</button></p>
 					<p>URL: {blog.url}</p>
-					<p>Likes: {blog.likes}<button onClick={handleLikes}>Like</button></p>
+					<p>Likes: {blog.likes}<button id='like-button' onClick={handleLikes}>Like</button></p>
 					<p>Author: {blog.author}</p>
 					{user.username === blog.user.username && <button onClick={handleDelete}>Remove</button>}
 				</>
