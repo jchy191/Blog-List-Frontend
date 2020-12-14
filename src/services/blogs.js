@@ -24,9 +24,9 @@ const update = async (updatedPost) => {
 	const config = {
 		headers: { Authorization: token }
 	};
-	const {author, date, likes, title, url, user} = updatedPost;
+	const { author, date, likes, title, url, user } = updatedPost;
 	const path = `${baseUrl}/${updatedPost.id}`;
-	const response = await axios.put(path, {author, date, likes, title, url, user: user.id}, config);
+	const response = await axios.put(path, { author, date, likes, title, url, user: user.id }, config);
 	return response.data;
 };
 

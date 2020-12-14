@@ -9,7 +9,7 @@ describe('<BlogsForm />', () => {
 		const component = render(
 			<BlogsForm addBlog={addBlog}/>
 		);
-		
+
 		const author = component.container.querySelector('#author-field');
 		const title = component.container.querySelector('#title-field');
 		const url = component.container.querySelector('#url-field');

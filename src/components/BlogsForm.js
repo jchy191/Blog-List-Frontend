@@ -16,15 +16,15 @@ function BlogsForm({ addBlog }) {
 	const handleChange = (e) => {
 		let value = e.target.value;
 		if (e.target.name === 'title') {
-			setNewPost({...newPost, title: value});		
+			setNewPost({ ...newPost, title: value });
 
 		}
 		if (e.target.name === 'author') {
-			setNewPost({...newPost, author: value});		
+			setNewPost({ ...newPost, author: value });
 
 		}
 		if (e.target.name === 'url') {
-			setNewPost({...newPost, url: value});		
+			setNewPost({ ...newPost, url: value });
 		}
 	};
 
@@ -35,7 +35,7 @@ function BlogsForm({ addBlog }) {
 
 	return (
 		<>
-			<h2>Add a blog entry:</h2> 
+			<h2>Add a blog entry:</h2>
 			<form onSubmit={handleSubmit}>
 				<label>Title: <input id='title-field' type='text' onChange={handleChange} value={newPost.title} name='title' /></label>
 				<label>Author: <input id='author-field' type='text' onChange={handleChange} value={newPost.author} name='author' /></label>

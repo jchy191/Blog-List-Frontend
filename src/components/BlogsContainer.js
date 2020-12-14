@@ -11,12 +11,12 @@ BlogsContainer.propTypes = {
 
 function BlogsContainer({ blogs, user, likeBlog, deleteBlog }) {
 	return (
-		<>
+		<div className='blog-container'>
 			<h2>Blogs</h2>
 			{blogs.map(blog =>
 				<Blog key={blog.id} user={user} blog={blog} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
 			)}
-		</>
+		</div>
 	);
 }
 

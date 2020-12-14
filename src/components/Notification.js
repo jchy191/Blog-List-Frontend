@@ -6,7 +6,7 @@ Notification.propTypes = {
 	isError: PropTypes.bool.isRequired,
 };
 
-function Notification({message, isError}) {
+function Notification({ message, isError }) {
 	if (message === null) {
 		return null;
 	}
@@ -16,7 +16,7 @@ function Notification({message, isError}) {
 	if (isError) {
 		messageType = 'error';
 	}
-	
+
 	return (
 		<div className={`${messageType}`}>
 			{message}

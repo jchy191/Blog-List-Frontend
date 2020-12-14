@@ -14,7 +14,7 @@ describe('<Blog />', () => {
 			url: 'www.test.com',
 			title: 'Testing JS',
 			likes: 90,
-			user: {username: 'Marky'}
+			user: { username: 'Marky' }
 		};
 		const user = {
 			username: 'Marky'

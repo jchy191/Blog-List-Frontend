@@ -22,17 +22,17 @@ function LoginForm({ login }) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		login({username, password});
+		login({ username, password });
 	};
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<label>Username: <input onChange={handleChange} value={username} name='username' type='text'/></label>
+			<label>Username: <input id='username' onChange={handleChange} value={username} name='username' type='text'/></label>
 			<br/>
-			<label>Password: <input onChange={handleChange} value={password} name='password' type='password'/></label>
+			<label>Password: <input id='password' onChange={handleChange} value={password} name='password' type='password'/></label>
 			<br/>
 			<br/>
-			<button type='submit'>Submit</button>
+			<button id='login-button' type='submit'>Submit</button>
 		</form>
 	);
 }

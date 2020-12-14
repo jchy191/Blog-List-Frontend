@@ -59,7 +59,7 @@ const App = () => {
 	const likeBlog = async (postToUpdate) => {
 		try {
 			blogService.setToken(user.token);
-			postToUpdate = {...postToUpdate, likes: postToUpdate.likes + 1};
+			postToUpdate = { ...postToUpdate, likes: postToUpdate.likes + 1 };
 			const response = await blogService.update(postToUpdate);
 			setBlogs(blogs.map(blog => blog.id !== postToUpdate.id ? blog : response)
 				.sort((a, b) => {
@@ -111,7 +111,7 @@ const App = () => {
 			setTimeout(() => {
 				setMessage(null);
 				setIsError(false);
-			}, 5000);		
+			}, 5000);
 		} catch (error) {
 			console.log(error);
 			setIsError(true);
@@ -131,7 +131,7 @@ const App = () => {
 	return (
 		<div>
 			<h1>Blog-list Application</h1>
-			{user === null ? 
+			{user === null ?
 				<>
 					<h2>Login</h2>
 					<Notification message={message} isError={isError} />
@@ -145,7 +145,7 @@ const App = () => {
 						<BlogsForm addBlog={addBlog}/>
 					</Toggable>
 					<BlogsContainer blogs={blogs} user={user} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
-				</>	
+				</>
 			}
 		</div>
 	);

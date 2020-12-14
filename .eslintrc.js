@@ -22,7 +22,7 @@ module.exports = {
 		'sourceType': 'module'
 	},
 	'plugins': [
-		'react', 'jest'
+		'react', 'jest', 'cypress'
 	],
 	'ignorePatterns': '/build',
 	'rules': {
@@ -41,6 +41,14 @@ module.exports = {
 		'semi': [
 			'error',
 			'always'
+		],
+		'eqeqeq': 'error',
+		'no-trailing-spaces': 'error',
+		'object-curly-spacing': [
+		'error', 'always'
+		],
+		'arrow-spacing': [
+				'error', { 'before': true, 'after': true }
 		]
 	}
 };

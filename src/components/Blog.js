@@ -17,7 +17,7 @@ function Blog({ blog, user, likeBlog, deleteBlog }) {
 		borderWidth: 1,
 		marginBottom: 5
 	};
-	
+
 	const [visible, setVisibility] = useState(false);
 
 	const handleLikes = () => {
