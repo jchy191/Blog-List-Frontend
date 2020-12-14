@@ -27,6 +27,8 @@ describe('<BlogsForm />', () => {
 		fireEvent.submit(form);
 
 		expect(addBlog.mock.calls).toHaveLength(1);
-		expect(addBlog.mock.calls).toHaveLength(0);
+		expect(addBlog.mock.calls[0][0].title).toBe('Hello!');
+		expect(addBlog.mock.calls[0][0].author).toBe('John');
+		expect(addBlog.mock.calls[0][0].url).toBe('www.testing123.com');
 	});
 });
