@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { fireEvent } from '@testing-library/dom';
 import Blog from '../components/Blog';
 
-describe('Blog', () => {
+describe('<Blog />', () => {
 	let component;
 	let likeHandler = jest.fn();
 

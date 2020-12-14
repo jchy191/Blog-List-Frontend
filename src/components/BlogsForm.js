@@ -37,9 +37,9 @@ function BlogsForm({ addBlog }) {
 		<>
 			<h2>Add a blog entry:</h2> 
 			<form onSubmit={handleSubmit}>
-				<label>Title: <input type='text' onChange={handleChange} value={newPost.title} name='title' /></label>
-				<label>Author: <input type='text' onChange={handleChange} value={newPost.author} name='author' /></label>
-				<label>URL: <input type='text' onChange={handleChange} value={newPost.url} name='url' /></label>
+				<label>Title: <input id='title-field' type='text' onChange={handleChange} value={newPost.title} name='title' /></label>
+				<label>Author: <input id='author-field' type='text' onChange={handleChange} value={newPost.author} name='author' /></label>
+				<label>URL: <input id='url-field' type='text' onChange={handleChange} value={newPost.url} name='url' /></label>
 				<br/>
 				<br/>
 				<button type='submit'>Add new</button>
